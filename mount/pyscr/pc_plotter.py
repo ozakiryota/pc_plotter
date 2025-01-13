@@ -23,9 +23,6 @@ class PcPlotter():
         return arg_parser
     
     def plot(self):
-        point_x_list = []
-        point_y_list = []
-        point_z_list = []
         first_timestamp = None
         last_timestamp = None
         fig = plt.figure()
@@ -38,6 +35,9 @@ class PcPlotter():
                 if first_timestamp == None:
                     first_timestamp = timestamp
                 if last_timestamp == None or (timestamp.to_sec() - last_timestamp.to_sec()) > self.args.interval_sec:
+                    point_x_list = []
+                    point_y_list = []
+                    point_z_list = []
                     for point in sensor_msgs.point_cloud2.read_points(msg, skip_nans=True, field_names=('x', 'y', 'z', 'intensity')):
                         point_x_list.append(point[0])
                         point_y_list.append(point[1])
