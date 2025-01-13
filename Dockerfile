@@ -21,14 +21,12 @@ RUN mkdir -p ~/catkin_ws/src && \
 	echo "export ROS_WORKSPACE=~/catkin_ws" >> $home_dir/.bashrc
 ## cmk
 RUN echo 'function cmk(){(cd $ROS_WORKSPACE; catkin_make $@)}' >> $home_dir/.bashrc
-########## Common Tool ##########
-# RUN apt-get update && \
-# 	apt-get install -y 
 ########## Python ##########
 RUN apt-get update && \
 	apt-get install -y \
+		python3-pip \
 		python3-tk \
-		python3-pip && \
+		python3-opencv && \
 	pip3 install matplotlib
 ########## Initial Position ##########
 WORKDIR $home_dir/catkin_ws/src/pc_plotter
