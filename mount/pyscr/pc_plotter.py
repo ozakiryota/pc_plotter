@@ -4,6 +4,7 @@ import sensor_msgs.point_cloud2
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
+import os
 
 
 class PcPlotter():
@@ -16,6 +17,7 @@ class PcPlotter():
     def setArgument(self):
         arg_parser = argparse.ArgumentParser()
         arg_parser.add_argument('--read_rosbag_path', type=str, required=True)
+        arg_parser.add_argument('--write_image_path', type=str, default='../output/pc_plotter.png')
         arg_parser.add_argument('--target_pc_topic', type=str, required=True)
         arg_parser.add_argument('--target_image_topic', type=str)
         arg_parser.add_argument('--num_show', type=int, default=1)
@@ -48,13 +50,13 @@ class PcPlotter():
                     plt.title("timestamp: " + '{:.1f}'.format(timestamp.to_sec() - first_timestamp.to_sec()) + " [s]")
                     plt.xlabel('y [m]')
                     plt.ylabel('x [m]')
-                    plt.plot(point_y_list, point_x_list, linestyle='None', marker='.', color = "black")
+                    plt.plot(point_y_list, point_x_list, linestyle='None', marker='.', color="black")
                     ## plot-yz
                     plt.subplot(self.num_rows, self.args.num_show, self.rowColToIndex(1, pc_counter))
                     plt.title("#points: " + str(msg.height * msg.width))
                     plt.xlabel('x [m]')
                     plt.ylabel('z [m]')
-                    plt.plot(point_x_list, point_z_list, linestyle='None', marker='.', color = "black")
+                    plt.plot(point_x_list, point_z_list, linestyle='None', marker='.', color="black")
                     ## counter
                     pc_counter += 1
             elif topic_name == self.args.target_image_topic and image_counter < self.args.num_show:
@@ -68,6 +70,8 @@ class PcPlotter():
                     image_counter += 1
 
         plt.tight_layout()
+        os.makedirs(os.path.dirname(self.args.write_image_path), exist_ok=True)
+        plt.savefig(self.args.write_image_path)
         plt.show()
 
     def rowColToIndex(self, row, col):

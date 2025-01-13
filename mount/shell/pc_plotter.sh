@@ -6,6 +6,7 @@ cd $exec_pwd/../pyscr
 
 python3 pc_plotter.py \
 	--read_rosbag_path $HOME/rosbag/test.bag \
+	--write_image_path $exec_pwd/../output/test.png \
 	--target_pc_topic /OUSTER_1/points/downsampled \
 	--num_show 5 \
     --interval_sec 10 \
