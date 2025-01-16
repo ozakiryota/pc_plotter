@@ -1,0 +1,10 @@
+<launch>
+	<!-- parameter -->
+	<arg name="read_rosbag_path" default="$(env HOME)/rosbag/test.bag"/>
+
+	<!-- main -->
+	<node pkg="pc_plotter" type="num_points_plotter" name="num_points_plotter" output="screen">
+		<param name="read_rosbag_path" type="string" value="$(arg read_rosbag_path)"/>
+		<param name="interval_sec" type="double" value="10"/>
+	</node>
+</launch>

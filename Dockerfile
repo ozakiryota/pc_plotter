@@ -13,8 +13,8 @@ ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 ########## Non-interactive ##########
 ENV DEBIAN_FRONTEND=noninteractive
 ########## ROS Setup ##########
-RUN mkdir -p ~/catkin_ws/src && \
-	cd ~/catkin_ws && \
+RUN mkdir -p $home_dir/catkin_ws/src && \
+	cd $home_dir/catkin_ws && \
 	/bin/bash -c "source /opt/ros/noetic/setup.bash; catkin_make" && \
 	echo "source /opt/ros/noetic/setup.bash" >> $home_dir/.bashrc && \
 	echo "source ~/catkin_ws/devel/setup.bash" >> $home_dir/.bashrc && \
@@ -28,6 +28,15 @@ RUN apt-get update && \
 		python3-tk \
 		python3-opencv && \
 	pip3 install matplotlib
+########## matplotlib-cpp ##########
+RUN apt-get update && \
+	apt-get install -y git && \
+	cd /tmp && \
+	git clone https://github.com/lava/matplotlib-cpp.git
+########## pc_plotter ##########
+COPY copy/pc_plotter $home_dir/catkin_ws/src/pc_plotter
+RUN cd $home_dir/catkin_ws && \
+	/bin/bash -c "source /opt/ros/noetic/setup.bash; catkin_make"
 ########## Initial Position ##########
 WORKDIR $home_dir/catkin_ws/src/pc_plotter
 CMD ["bash"]
