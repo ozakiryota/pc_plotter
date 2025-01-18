@@ -23,6 +23,7 @@ private:
     std::string target_pc_topic_;
     float interval_sec_;
     int num_show_;
+    const int num_rows_; // xy, yz
     /*function*/
     std::string getDefaultOutputPath();
 
@@ -32,7 +33,7 @@ public:
 };
 
 PcPlotter::PcPlotter()
-    : nh_private_("~")
+    : nh_private_("~"), num_rows_(2)
 {
     std::cout << "----- pc_plotter -----" << std::endl;
 
@@ -114,12 +115,12 @@ void PcPlotter::run()
                 }
                 last_timestamp_sec_ = curr_timestamp_sec;
                 show_counter++;
-                matplotlibcpp::subplot(2, num_show_, show_counter);
+                matplotlibcpp::subplot(num_rows_, num_show_, show_counter);
                 matplotlibcpp::title(std::to_string(curr_timestamp_sec - first_timestamp_sec_));
                 matplotlibcpp::xlabel("y [m]");
                 matplotlibcpp::ylabel("x [m]");
                 matplotlibcpp::plot(pc_y_list, pc_x_list, ".k");
-                matplotlibcpp::subplot(2, num_show_, show_counter + num_show_);
+                matplotlibcpp::subplot(num_rows_, num_show_, show_counter + num_show_);
                 matplotlibcpp::xlabel("x [m]");
                 matplotlibcpp::ylabel("z [m]");
                 matplotlibcpp::plot(pc_x_list, pc_z_list, ".k");
