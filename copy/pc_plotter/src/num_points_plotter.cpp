@@ -7,7 +7,7 @@
 
 #include "/tmp/matplotlib-cpp/matplotlibcpp.h"
 
-class TemperatePlotter
+class NumPointsPlotter
 {
 private:
     /*node handle*/
@@ -24,14 +24,14 @@ private:
     std::string getDefaultCsvPath();
 
 public:
-    TemperatePlotter();
+    NumPointsPlotter();
     void run();
 };
 
-TemperatePlotter::TemperatePlotter()
+NumPointsPlotter::NumPointsPlotter()
     : nh_private_("~"), first_timestamp_sec_(-1)
 {
-    std::cout << "----- temperature_plotter -----" << std::endl;
+    std::cout << "----- num_points_plotter -----" << std::endl;
 
     /*parameter*/
     if (!nh_private_.getParam("read_rosbag_path", read_rosbag_path_))
@@ -48,7 +48,7 @@ TemperatePlotter::TemperatePlotter()
     std::cout << "interval_sec_ = " << interval_sec_ << std::endl;
 }
 
-std::string TemperatePlotter::getDefaultCsvPath()
+std::string NumPointsPlotter::getDefaultCsvPath()
 {
     const char *tmp = getenv("ROS_WORKSPACE");
     std::string output_path(tmp ? tmp : "");
@@ -61,7 +61,7 @@ std::string TemperatePlotter::getDefaultCsvPath()
     return output_path;
 }
 
-void TemperatePlotter::run()
+void NumPointsPlotter::run()
 {
     rosbag::Bag bag;
 
@@ -121,8 +121,8 @@ void TemperatePlotter::run()
 
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "temperature_plotter");
+    ros::init(argc, argv, "num_points_plotter");
 
-    TemperatePlotter temperature_plotter;
-    temperature_plotter.run();
+    NumPointsPlotter num_points_plotter;
+    num_points_plotter.run();
 }
