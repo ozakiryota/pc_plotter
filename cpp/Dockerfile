@@ -30,20 +30,13 @@ RUN cd $home_dir && \
 	apt-get update && \
 	apt-get install -y python3-matplotlib
 ########## pc_plotter ##########
-COPY copy/pc_plotter $home_dir/catkin_ws/src/pc_plotter
 RUN apt-get update && \
 	apt-get install -y \
 		libpcl-dev \
 		ros-noetic-pcl-conversions
+COPY copy/pc_plotter $home_dir/catkin_ws/src/pc_plotter
 RUN cd $home_dir/catkin_ws && \
 	/bin/bash -c "source /opt/ros/noetic/setup.bash; catkin_make"
-########## Python ##########
-# RUN apt-get update && \
-# 	apt-get install -y \
-# 		python3-pip \
-# 		python3-tk \
-# 		python3-opencv && \
-# 	pip3 install matplotlib
 ########## Initial Position ##########
 WORKDIR $home_dir/catkin_ws/src/pc_plotter
 CMD ["bash"]
