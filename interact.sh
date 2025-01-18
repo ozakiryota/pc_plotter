@@ -24,4 +24,5 @@ docker run \
 	-v $exec_pwd/mount/launch:$catkin_ws_src/$image/launch \
 	-v $exec_pwd/rosbag:$home_dir/rosbag:ro \
 	-v $exec_pwd/copy/$image/src:$catkin_ws_src/$image/src \
+	-v $exec_pwd/copy/$image/CMakeLists.txt:$catkin_ws_src/$image/CMakeLists.txt \
 	$image:$tag

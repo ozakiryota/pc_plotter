@@ -5,7 +5,7 @@
 #include <rosbag/view.h>
 #include <sensor_msgs/PointCloud2.h>
 
-#include "/tmp/matplotlib-cpp/matplotlibcpp.h"
+#include "/home/user/matplotlib-cpp/matplotlibcpp.h"
 
 class NumPointsPlotter
 {

@@ -7,7 +7,8 @@ find_package(catkin REQUIRED
     roscpp
     rosbag
 )
-find_package(PythonLibs REQUIRED)
+find_package(PythonLibs)
+find_package(PCL)
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -32,6 +33,13 @@ include_directories(
 add_executable(num_points_plotter src/num_points_plotter.cpp)
 target_link_libraries(num_points_plotter
     ${catkin_LIBRARIES}
+    ${PYTHON_LIBRARIES}
+)
+
+add_executable(pc_plotter src/pc_plotter.cpp)
+target_link_libraries(pc_plotter
+    ${catkin_LIBRARIES}
+    ${PCL_LIBRARIES}
     ${PYTHON_LIBRARIES}
 )
 
